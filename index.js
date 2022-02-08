@@ -1,6 +1,7 @@
 const chesBoard = document.getElementById("chesboard");
 const submitBtn = document.getElementById("submit-btn");
 const numberElement = document.getElementById("number");
+const errorElement = document.querySelector(".error");
 let boxes;
 
 const makeRow = (number) => {
@@ -29,13 +30,17 @@ const makeRow = (number) => {
 submitBtn.addEventListener("click", () => {
   boxes = Number(numberElement.value);
   let tempBox = boxes;
-  if (boxes > 50) {
-    alert("Please use bigger screen to view this layout");
-  }
   if (chesBoard.hasChildNodes()) {
     chesBoard.innerHTML = "";
   }
-  while (tempBox--) {
-    chesBoard.appendChild(makeRow(tempBox));
+  if (boxes <= 0) {
+    errorElement.innerText = "Invalid number";
+  } else if (boxes > 50) {
+    errorElement.innerText = "You can not add more than 50 rows";
+  } else {
+    errorElement.innerText = "";
+    while (tempBox--) {
+      chesBoard.appendChild(makeRow(tempBox));
+    }
   }
 });
